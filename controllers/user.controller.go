@@ -33,7 +33,7 @@ func SignUpController(w http.ResponseWriter, r *http.Request) {
 	json.NewDecoder(r.Body).Decode(&user)
 	w.Header().Set("Content-Type", "application/json")
 
-	res := repo.SignUpRepo(user)
+	res := repo.SignUpRepo(&user)
 	jsonResponse, _ := json.Marshal(res)
 
 	if !res.Success {
