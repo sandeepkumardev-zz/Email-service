@@ -4,7 +4,6 @@ import (
 	"email/config"
 	"email/models"
 	"email/utils"
-	"time"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -24,8 +23,7 @@ func SignInRepo(user *models.User) Response {
 	}
 
 	// genrate JWT token
-	expireTokenTime := time.Now().Add(time.Minute * 10)
-	tokenSting, err := utils.CreateToken(user.Email, expireTokenTime)
+	tokenSting, err := utils.CreateToken(user.Email)
 	if err != nil {
 		return Response{Message: "Something went wrong!", Data: nil, Success: false}
 	}

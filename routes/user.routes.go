@@ -14,5 +14,7 @@ func SetupRouter() *mux.Router {
 	router.HandleFunc("/signin", Ctrl.SignInController).Methods("Post")
 	router.HandleFunc("/signup", Ctrl.SignUpController).Methods("Post")
 
+	router.HandleFunc("/compose", Ctrl.ComposeController).Methods("Post")
+
 	return router
 }

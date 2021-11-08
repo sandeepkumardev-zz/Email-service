@@ -3,6 +3,7 @@ package controllers
 import (
 	"email/models"
 	repo "email/repository"
+	"email/utils"
 	"encoding/json"
 	"net/http"
 )
@@ -41,4 +42,17 @@ func SignUpController(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	w.Write(jsonResponse)
+}
+
+func ComposeController(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	//verify Token
+	tokenInfo, err := utils.VerifyByHeaders(r)
+	if err != "" {
+		jsonResponse, _ := json.Marshal(Response{Message: err, Data: nil, Success: false})
+		w.Write(jsonResponse)
+		return
+	}
+	jsonResponse, _ := json.Marshal(tokenInfo.Claims)
+	w.Write([]byte(jsonResponse))
 }
