@@ -3,11 +3,14 @@ package repository
 import (
 	"email/config"
 	"email/models"
+	"email/utils"
+	"time"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
 type Response models.Response
+type Token models.Token
 
 var err error
 
@@ -19,7 +22,15 @@ func SignInRepo(user *models.User) Response {
 	if err = bcrypt.CompareHashAndPassword([]byte(user.Password), []byte(pswd)); err != nil {
 		return Response{Message: "Wrong password!", Data: nil, Success: false}
 	}
-	return Response{Message: "SignedIn successfully", Data: nil, Success: true}
+
+	// genrate JWT token
+	expireTokenTime := time.Now().Add(time.Minute * 10)
+	tokenSting, err := utils.CreateToken(user.Email, expireTokenTime)
+	if err != nil {
+		return Response{Message: "Something went wrong!", Data: nil, Success: false}
+	}
+
+	return Response{Message: "SignedIn successfully", Data: Token{Token: tokenSting}, Success: true}
 }
 
 func SignUpRepo(user *models.User) Response {
