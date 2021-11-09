@@ -5,10 +5,9 @@ import (
 	repo "email/repository"
 	"email/utils"
 	"encoding/json"
-	"fmt"
 	"net/http"
 
-	"github.com/dgrijalva/jwt-go"
+	"github.com/jasonlvhit/gocron"
 )
 
 type Response models.Response
@@ -55,20 +54,33 @@ func SignUpController(w http.ResponseWriter, r *http.Request) {
 // @Success 200 {array} Email
 // @Router /compose [post]
 
-func ComposeController(w http.ResponseWriter, r *http.Request) {
+func EmailComposeController(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	//verify Token
-	tokenInfo, err := utils.VerifyAccessToken(r)
+	_, err := utils.VerifyAccessToken(r)
 	if err != "" {
 		jsonResponse, _ := json.Marshal(Response{Message: err, Data: nil, Success: false})
 		w.Write(jsonResponse)
 		return
 	}
 
-	ext := tokenInfo.(jwt.MapClaims)
-	userEmail := fmt.Sprintf("%v", ext["email"])
+	var T models.EmailTemplate
+	json.NewDecoder(r.Body).Decode(&T)
 
-	w.Write([]byte(userEmail))
+	var resChan = make(chan string)
+	var errChan = make(chan string)
+
+	gocron.Every(1).Day().At("17:22").Do(utils.SendEmail, T.To, []byte(T.Message), resChan, errChan)
+
+	select {
+	case <-gocron.Start():
+	case err := <-errChan:
+		jsonResponse, _ := json.Marshal(Response{Message: err, Data: nil, Success: false})
+		w.Write(jsonResponse)
+	case res := <-resChan:
+		jsonResponse, _ := json.Marshal(Response{Message: res, Data: nil, Success: true})
+		w.Write(jsonResponse)
+	}
 }
 
 func RefreshTokenController(w http.ResponseWriter, r *http.Request) {

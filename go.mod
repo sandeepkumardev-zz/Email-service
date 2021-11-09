@@ -15,3 +15,5 @@ require (
 	github.com/xhit/go-str2duration/v2 v2.0.0
 	golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
 )
+
+require github.com/jasonlvhit/gocron v0.0.1 // indirect

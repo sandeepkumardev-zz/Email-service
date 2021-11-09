@@ -12,3 +12,8 @@ type TokenDetails struct {
 	AtExpires    int64
 	RtExpires    int64
 }
+
+type EmailTemplate struct {
+	To      []string `json:"to"`
+	Message string   `json:"message"`
+}

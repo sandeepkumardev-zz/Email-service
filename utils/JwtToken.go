@@ -15,8 +15,8 @@ var td = &M.TokenDetails{}
 
 func CreateToken(email string) (*M.TokenDetails, error) {
 	// min, _ := str2duration.ParseDuration(os.Getenv("EXPIRE_ACCESS_SECRET"))
-	td.AtExpires = time.Now().Add(time.Minute * 1).Unix()
-	td.RtExpires = time.Now().Add(time.Minute * 2).Unix()
+	td.AtExpires = time.Now().Add(time.Minute * 10).Unix()
+	td.RtExpires = time.Now().Add(time.Minute * 20).Unix()
 
 	var err error
 	//Creating Access Token
@@ -54,6 +54,8 @@ func VerifyAccessToken(req *http.Request) (jwt.Claims, string) {
 		// extract expiresTime from token
 		ext := token.Claims.(jwt.MapClaims)
 		expiresTime := ext["expiresAt"]
+		// ext := tokenInfo.(jwt.MapClaims)
+		// userEmail := fmt.Sprintf("%v", ext["email"])
 
 		if int64(expiresTime.(float64)) < time.Now().Unix() {
 			return nil, "Token expired!"
