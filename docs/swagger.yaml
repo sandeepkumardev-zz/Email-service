@@ -1,0 +1,47 @@
+basePath: /
+definitions:
+  models.EmailTemplate:
+    properties:
+      message:
+        type: string
+      to:
+        items:
+          type: string
+        type: array
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: soberkoder@swagger.io
+    name: API Support
+  description: A service where users can register and send an email & do live chat.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Email services
+  version: "1.0"
+paths:
+  /compose:
+    post:
+      consumes:
+      - application/json
+      description: You need to a Token in headers then "Send Email" will execute
+      parameters:
+      - description: Send an email
+        in: body
+        name: template
+        required: true
+        schema:
+          $ref: '#/definitions/models.EmailTemplate'
+      produces:
+      - application/json
+      responses:
+        "401":
+          description: Unauthorized
+          schema:
+            type: object
+      summary: Varify token & send an email.
+      tags:
+      - Email
+swagger: "2.0"

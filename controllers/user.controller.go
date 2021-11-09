@@ -46,14 +46,15 @@ func SignUpController(w http.ResponseWriter, r *http.Request) {
 	w.Write(jsonResponse)
 }
 
-// Email Compose
-// @Description Varify user & send an email.
+// Verify Token & Send Email
+// @Summary Varify token & send an email.
+// @Description You need to give a Token in headers then "Send Email" will execute.
+// @Tags Email
 // @Accept  json
 // @Produce  json
-// @Param email body string true "Send an email"
-// @Success 200 {array} Email
+// @Param template body models.EmailTemplate true "Send an email"
+// @Failure 401 {object} object
 // @Router /compose [post]
-
 func EmailComposeController(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	//verify Token
