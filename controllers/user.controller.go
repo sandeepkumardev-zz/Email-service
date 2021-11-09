@@ -47,6 +47,14 @@ func SignUpController(w http.ResponseWriter, r *http.Request) {
 	w.Write(jsonResponse)
 }
 
+// Email Compose
+// @Description Varify user & send an email.
+// @Accept  json
+// @Produce  json
+// @Param email body string true "Send an email"
+// @Success 200 {array} Email
+// @Router /compose [post]
+
 func ComposeController(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	//verify Token
