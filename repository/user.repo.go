@@ -9,7 +9,6 @@ import (
 )
 
 type Response models.Response
-type Token models.Token
 
 var err error
 
@@ -23,12 +22,17 @@ func SignInRepo(user *models.User) Response {
 	}
 
 	// genrate JWT token
-	tokenSting, err := utils.CreateToken(user.Email)
+	ts, err := utils.CreateToken(user.Email)
 	if err != nil {
 		return Response{Message: "Something went wrong!", Data: nil, Success: false}
 	}
 
-	return Response{Message: "SignedIn successfully", Data: Token{Token: tokenSting}, Success: true}
+	tokens := map[string]string{
+		"access_token":  ts.AccessToken,
+		"refresh_token": ts.RefreshToken,
+	}
+
+	return Response{Message: "SignedIn successfully", Data: tokens, Success: true}
 }
 
 func SignUpRepo(user *models.User) Response {
