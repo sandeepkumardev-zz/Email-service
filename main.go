@@ -17,7 +17,7 @@ import (
 // @description A service where users can register and send an email & do live chat.
 // @termsOfService http://swagger.io/terms/
 // @contact.name API Support
-// @contact.email soberkoder@swagger.io
+// @contact.email sandeepypb@gmail.com
 // @license.name Apache 2.0
 // @license.url http://www.apache.org/licenses/LICENSE-2.0.html
 // @host localhost:3000

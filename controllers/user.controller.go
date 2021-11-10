@@ -16,6 +16,16 @@ func HomeController(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Hello"))
 }
 
+// Sign In controller
+// @Summary Sign In with credentials.
+// @Description A registered user can sign in with their credentials.
+// @Tags Sign In
+// @Accept  json
+// @Produce  json
+// @Param user body models.User true "Sign In User"
+// @Success 200 {object} models.User
+// @Failure 401 {object} object
+// @Router /signin [post]
 func SignInController(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 	json.NewDecoder(r.Body).Decode(&user)
@@ -31,6 +41,16 @@ func SignInController(w http.ResponseWriter, r *http.Request) {
 	w.Write(jsonResponse)
 }
 
+// Sign Up controller
+// @Summary Sign Up with credentials.
+// @Description A new user can sign up with their email & password.
+// @Tags Sign Up
+// @Accept  json
+// @Produce  json
+// @Param user body models.User true "Sign Up User"
+// @Success 200 {object} models.User
+// @Failure 401 {object} object
+// @Router /signup [post]
 func SignUpController(w http.ResponseWriter, r *http.Request) {
 	var user models.User
 	json.NewDecoder(r.Body).Decode(&user)
@@ -46,13 +66,14 @@ func SignUpController(w http.ResponseWriter, r *http.Request) {
 	w.Write(jsonResponse)
 }
 
-// Verify Token & Send Email
+// Email controller
 // @Summary Varify token & send an email.
-// @Description You need to give a Token in headers then "Send Email" will execute.
-// @Tags Email
+// @Description You need to signedIn and give a Token in headers then "Send Email" will execute.
+// @Tags Email Compose
 // @Accept  json
 // @Produce  json
 // @Param template body models.EmailTemplate true "Send an email"
+// @Success 200 {object} models.EmailTemplate
 // @Failure 401 {object} object
 // @Router /compose [post]
 func EmailComposeController(w http.ResponseWriter, r *http.Request) {
@@ -84,6 +105,13 @@ func EmailComposeController(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Refresh token controller
+// @Summary Varify token & create a new token.
+// @Description You need to signedIn and give a Token in headers then "Refresh Token" will execute.
+// @Tags Refresh token
+// @Accept  json
+// @Produce  json
+// @Router /refreshToken [post]
 func RefreshTokenController(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	//verify Token

@@ -9,10 +9,17 @@ definitions:
           type: string
         type: array
     type: object
+  models.User:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    type: object
 host: localhost:3000
 info:
   contact:
-    email: soberkoder@swagger.io
+    email: sandeepypb@gmail.com
     name: API Support
   description: A service where users can register and send an email & do live chat.
   license:
@@ -26,7 +33,8 @@ paths:
     post:
       consumes:
       - application/json
-      description: You need to a Token in headers then "Send Email" will execute
+      description: You need to signedIn and give a Token in headers then "Send Email"
+        will execute.
       parameters:
       - description: Send an email
         in: body
@@ -37,11 +45,78 @@ paths:
       produces:
       - application/json
       responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.EmailTemplate'
         "401":
           description: Unauthorized
           schema:
             type: object
       summary: Varify token & send an email.
       tags:
-      - Email
+      - Email Compose
+  /refreshToken:
+    post:
+      consumes:
+      - application/json
+      description: You need to signedIn and give a Token in headers then "Refresh
+        Token" will execute.
+      produces:
+      - application/json
+      summary: Varify token & create a new token.
+      tags:
+      - Refresh token
+  /signin:
+    post:
+      consumes:
+      - application/json
+      description: A registered user can sign in with their credentials.
+      parameters:
+      - description: Sign In User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "401":
+          description: Unauthorized
+          schema:
+            type: object
+      summary: Sign In with credentials.
+      tags:
+      - Sign In
+  /signup:
+    post:
+      consumes:
+      - application/json
+      description: A new user can sign up with their email & password.
+      parameters:
+      - description: Sign Up User
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.User'
+        "401":
+          description: Unauthorized
+          schema:
+            type: object
+      summary: Sign Up with credentials.
+      tags:
+      - Sign Up
 swagger: "2.0"

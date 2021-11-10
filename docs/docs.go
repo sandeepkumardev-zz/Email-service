@@ -20,7 +20,7 @@ var doc = `{
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
             "name": "API Support",
-            "email": "soberkoder@swagger.io"
+            "email": "sandeepypb@gmail.com"
         },
         "license": {
             "name": "Apache 2.0",
@@ -33,7 +33,7 @@ var doc = `{
     "paths": {
         "/compose": {
             "post": {
-                "description": "You need to a Token in headers then \"Send Email\" will execute",
+                "description": "You need to signedIn and give a Token in headers then \"Send Email\" will execute.",
                 "consumes": [
                     "application/json"
                 ],
@@ -41,7 +41,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Email"
+                    "Email Compose"
                 ],
                 "summary": "Varify token \u0026 send an email.",
                 "parameters": [
@@ -56,6 +56,107 @@ var doc = `{
                     }
                 ],
                 "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.EmailTemplate"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/refreshToken": {
+            "post": {
+                "description": "You need to signedIn and give a Token in headers then \"Refresh Token\" will execute.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Refresh token"
+                ],
+                "summary": "Varify token \u0026 create a new token."
+            }
+        },
+        "/signin": {
+            "post": {
+                "description": "A registered user can sign in with their credentials.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Sign In"
+                ],
+                "summary": "Sign In with credentials.",
+                "parameters": [
+                    {
+                        "description": "Sign In User",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "/signup": {
+            "post": {
+                "description": "A new user can sign up with their email \u0026 password.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Sign Up"
+                ],
+                "summary": "Sign Up with credentials.",
+                "parameters": [
+                    {
+                        "description": "Sign Up User",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    },
                     "401": {
                         "description": "Unauthorized",
                         "schema": {
@@ -78,6 +179,17 @@ var doc = `{
                     "items": {
                         "type": "string"
                     }
+                }
+            }
+        },
+        "models.User": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
                 }
             }
         }
