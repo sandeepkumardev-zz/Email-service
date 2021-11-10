@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	"github.com/jasonlvhit/gocron"
+	log "github.com/sirupsen/logrus"
 )
 
 type Response models.Response
@@ -35,9 +36,11 @@ func SignInController(w http.ResponseWriter, r *http.Request) {
 	jsonResponse, _ := json.Marshal(res)
 
 	if !res.Success {
+		log.Warn("Failed to sign in.")
 		w.Write(jsonResponse)
 		return
 	}
+	log.Info("Signed In as ", user.Email)
 	w.Write(jsonResponse)
 }
 
@@ -60,9 +63,11 @@ func SignUpController(w http.ResponseWriter, r *http.Request) {
 	jsonResponse, _ := json.Marshal(res)
 
 	if !res.Success {
+		log.Warn("Failed to sign up.")
 		w.Write(jsonResponse)
 		return
 	}
+	log.Info("Signed Up as ", user.Email)
 	w.Write(jsonResponse)
 }
 
@@ -98,9 +103,11 @@ func EmailComposeController(w http.ResponseWriter, r *http.Request) {
 	case <-gocron.Start():
 	case err := <-errChan:
 		jsonResponse, _ := json.Marshal(Response{Message: err, Data: nil, Success: false})
+		log.Error("Failed to send email to ", T.To)
 		w.Write(jsonResponse)
 	case res := <-resChan:
 		jsonResponse, _ := json.Marshal(Response{Message: res, Data: nil, Success: true})
+		log.Info("Email send to ", T.To)
 		w.Write(jsonResponse)
 	}
 }
@@ -118,6 +125,7 @@ func RefreshTokenController(w http.ResponseWriter, r *http.Request) {
 	td, err := utils.VerifyRefreshToken(r)
 	if err != "" {
 		jsonResponse, _ := json.Marshal(Response{Message: err, Data: nil, Success: false})
+		log.Error("Error refreshing token")
 		w.Write(jsonResponse)
 		return
 	}
@@ -128,5 +136,6 @@ func RefreshTokenController(w http.ResponseWriter, r *http.Request) {
 	}
 
 	jsonResponse, _ := json.Marshal(Response{Message: "Successfully refresh token.", Data: tokens, Success: true})
+	log.Info("Token refreshed")
 	w.Write(jsonResponse)
 }
