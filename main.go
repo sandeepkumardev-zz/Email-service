@@ -12,16 +12,16 @@ import (
 	"github.com/joho/godotenv"
 )
 
-// @title Email services
-// @version 1.0
+// @title Email services API Documentation.
+// @version 1.0.0
 // @description A service where users can register and send an email & do live chat.
 // @termsOfService http://swagger.io/terms/
-// @contact.name API Support
-// @contact.email sandeepypb@gmail.com
-// @license.name Apache 2.0
-// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
+
+// @contact.name Sandeep kumar
+// @contact.email sandeepk@gmail.com
+
 // @host localhost:3000
-// @BasePath /
+// @BasePath /api/v1
 
 func main() {
 	fmt.Println("Startig email services...")
@@ -34,9 +34,9 @@ func main() {
 	config.DB = config.SetupDatabase()
 	config.DB.AutoMigrate(&models.User{})
 
-	router := routes.SetupRouter()
+	handler := routes.SetupRouter()
 	log.Println("Listening on :" + os.Getenv("LOCAL_PORT") + "...")
-	error := http.ListenAndServe(":"+os.Getenv("LOCAL_PORT"), router)
+	error := http.ListenAndServe(":"+os.Getenv("LOCAL_PORT"), handler)
 	if error != nil {
 		log.Fatal("Error listening router!")
 	}

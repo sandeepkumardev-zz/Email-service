@@ -19,12 +19,8 @@ var doc = `{
         "title": "{{.Title}}",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
-            "name": "API Support",
-            "email": "sandeepypb@gmail.com"
-        },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+            "name": "Sandeep kumar",
+            "email": "sandeepk@gmail.com"
         },
         "version": "{{.Version}}"
     },
@@ -207,11 +203,11 @@ type swaggerInfo struct {
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
-	Version:     "1.0",
+	Version:     "1.0.0",
 	Host:        "localhost:3000",
-	BasePath:    "/",
+	BasePath:    "/api/v1",
 	Schemes:     []string{},
-	Title:       "Email services",
+	Title:       "Email services API Documentation.",
 	Description: "A service where users can register and send an email & do live chat.",
 }
 

@@ -1,4 +1,4 @@
-basePath: /
+basePath: /api/v1
 definitions:
   models.EmailTemplate:
     properties:
@@ -19,15 +19,12 @@ definitions:
 host: localhost:3000
 info:
   contact:
-    email: sandeepypb@gmail.com
-    name: API Support
+    email: sandeepk@gmail.com
+    name: Sandeep kumar
   description: A service where users can register and send an email & do live chat.
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
   termsOfService: http://swagger.io/terms/
-  title: Email services
-  version: "1.0"
+  title: Email services API Documentation.
+  version: 1.0.0
 paths:
   /compose:
     post:

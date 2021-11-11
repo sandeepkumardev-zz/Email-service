@@ -2,20 +2,16 @@
     "swagger": "2.0",
     "info": {
         "description": "A service where users can register and send an email \u0026 do live chat.",
-        "title": "Email services",
+        "title": "Email services API Documentation.",
         "termsOfService": "http://swagger.io/terms/",
         "contact": {
-            "name": "API Support",
-            "email": "sandeepypb@gmail.com"
+            "name": "Sandeep kumar",
+            "email": "sandeepk@gmail.com"
         },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-        },
-        "version": "1.0"
+        "version": "1.0.0"
     },
     "host": "localhost:3000",
-    "basePath": "/",
+    "basePath": "/api/v1",
     "paths": {
         "/compose": {
             "post": {

@@ -82,15 +82,6 @@ func SignUpController(w http.ResponseWriter, r *http.Request) {
 // @Failure 401 {object} object
 // @Router /compose [post]
 func EmailComposeController(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	//verify Token
-	_, err := utils.VerifyAccessToken(r)
-	if err != "" {
-		jsonResponse, _ := json.Marshal(Response{Message: err, Data: nil, Success: false})
-		w.Write(jsonResponse)
-		return
-	}
-
 	var T models.EmailTemplate
 	json.NewDecoder(r.Body).Decode(&T)
 
