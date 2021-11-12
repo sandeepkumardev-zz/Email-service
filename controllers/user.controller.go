@@ -85,22 +85,15 @@ func EmailComposeController(w http.ResponseWriter, r *http.Request) {
 	var T models.EmailTemplate
 	json.NewDecoder(r.Body).Decode(&T)
 
-	var resChan = make(chan string)
-	var errChan = make(chan string)
+	utils.CreateQueue()
 
-	gocron.Every(1).Day().At("17:22").Do(utils.SendEmail, T.To, []byte(T.Message), resChan, errChan)
+	s := gocron.NewScheduler()
+	s.Every(1).Day().At("15:12").Do(utils.Dispatch, T)
+	s.Start()
+	log.Info("Email in progress ...")
 
-	select {
-	case <-gocron.Start():
-	case err := <-errChan:
-		jsonResponse, _ := json.Marshal(Response{Message: err, Data: nil, Success: false})
-		log.Error("Failed to send email to ", T.To)
-		w.Write(jsonResponse)
-	case res := <-resChan:
-		jsonResponse, _ := json.Marshal(Response{Message: res, Data: nil, Success: true})
-		log.Info("Email send to ", T.To)
-		w.Write(jsonResponse)
-	}
+	jsonResponse, _ := json.Marshal(Response{Message: "Email in progress", Data: nil, Success: true})
+	w.Write(jsonResponse)
 }
 
 // Refresh token controller
