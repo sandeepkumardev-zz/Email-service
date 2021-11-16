@@ -8,11 +8,10 @@ import (
 	"os"
 
 	"github.com/gorilla/mux"
-	cors "github.com/rs/cors"
 	httpSwagger "github.com/swaggo/http-swagger"
 )
 
-func SetupRouter() http.Handler {
+func SetupRouter() *mux.Router {
 	router := mux.NewRouter()
 
 	// Api Prefix
@@ -22,8 +21,8 @@ func SetupRouter() http.Handler {
 
 	apiV1 := router.PathPrefix("/" + apiPrefix + "/" + apiVersion).Subrouter()
 
-	getR := apiV1.Methods(http.MethodGet).Subrouter()
-	getR.HandleFunc("", Ctrl.HomeController).Schemes("http").Host("localhost:3000")
+	// getR := apiV1.Methods(http.MethodGet).Subrouter()
+	// getR.HandleFunc("", Ctrl.HomeController).Schemes("http").Host("localhost:3000")
 
 	postR := apiV1.Methods(http.MethodPost).Subrouter()
 	postR.HandleFunc("/signin", Ctrl.SignInController)
@@ -36,15 +35,5 @@ func SetupRouter() http.Handler {
 	// logger middleware
 	router.Use(M.LoggingMiddleware)
 
-	// Apply the middleware to the router
-	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"*"},
-		AllowedMethods:   []string{"GET", "POST"},
-		AllowedHeaders:   []string{"Authorization, Content-Type"},
-		MaxAge:           50, // in seconds
-		AllowCredentials: true,
-	})
-	handler := c.Handler(router)
-
-	return handler
+	return router
 }

@@ -98,6 +98,18 @@ require (
 )
 
 require (
+	github.com/googollee/go-socket.io v1.0.1
 	golang.org/x/term v0.0.0-20201126162022-7de9c90e9dd1 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
+)
+
+require (
+	github.com/gofrs/uuid v4.0.0+incompatible // indirect
+	github.com/gomodule/redigo v1.8.4 // indirect
+	github.com/gorilla/handlers v1.5.1
+)
+
+require (
+	github.com/felixge/httpsnoop v1.0.1 // indirect
+	github.com/googollee/go-engine.io v1.0.1 // indirect
 )

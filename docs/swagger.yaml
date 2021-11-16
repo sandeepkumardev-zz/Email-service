@@ -2,12 +2,8 @@ basePath: /api/v1
 definitions:
   models.EmailTemplate:
     properties:
-      message:
-        type: string
       to:
-        items:
-          type: string
-        type: array
+        type: string
     type: object
   models.User:
     properties:

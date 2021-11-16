@@ -167,14 +167,8 @@ var doc = `{
         "models.EmailTemplate": {
             "type": "object",
             "properties": {
-                "message": {
-                    "type": "string"
-                },
                 "to": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
+                    "type": "string"
                 }
             }
         },
