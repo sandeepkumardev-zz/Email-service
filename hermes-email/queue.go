@@ -1,4 +1,4 @@
-package utils
+package hermes
 
 import (
 	"encoding/json"

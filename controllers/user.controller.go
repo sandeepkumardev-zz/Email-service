@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	Queue "email/hermes-email"
 	"email/models"
 	repo "email/repository"
 	"email/utils"
@@ -85,10 +86,11 @@ func EmailComposeController(w http.ResponseWriter, r *http.Request) {
 	var T models.EmailTemplate
 	json.NewDecoder(r.Body).Decode(&T)
 
-	utils.CreateQueue()
-
+	// create the new Queue instance
+	Queue.CreateQueue()
+	// schedule the CRON job
 	s := gocron.NewScheduler()
-	s.Every(1).Day().At("15:12").Do(utils.Dispatch, T)
+	s.Every(1).Day().At("14:09").Do(Queue.Dispatch, T)
 	s.Start()
 	log.Info("Email in progress ...")
 
