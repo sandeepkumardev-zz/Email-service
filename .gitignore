@@ -18,4 +18,5 @@
 # vendor/
 
 *static 
-emailTemplate.go
+default
+flat
