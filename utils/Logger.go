@@ -6,7 +6,7 @@ import (
 )
 
 func Logger(str string) {
-	f, err := os.OpenFile("logfile.log",
+	f, err := os.OpenFile("logfile.txt",
 		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Println(err)
