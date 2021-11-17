@@ -4,6 +4,7 @@ import (
 	"email/config"
 	"email/models"
 	"email/routes"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -26,13 +27,14 @@ import (
 // var addr = flag.String("addr", ":8080", "http service address")
 
 func main() {
-	// fmt.Println("Startig email services...")
+	fmt.Println("Startig email services...")
 
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
+	// Database setup
 	config.DB = config.SetupDatabase()
 	config.DB.AutoMigrate(&models.User{})
 
