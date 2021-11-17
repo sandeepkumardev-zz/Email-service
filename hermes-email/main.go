@@ -14,7 +14,7 @@ import (
 	"github.com/adjust/rmq/v4"
 	"github.com/go-gomail/gomail"
 	"github.com/matcornic/hermes/v2"
-	"golang.org/x/crypto/ssh/terminal"
+	// "golang.org/x/crypto/ssh/terminal"
 )
 
 type example interface {
@@ -62,11 +62,11 @@ func SendEmail(delivery rmq.Delivery) {
 		port, _ := strconv.Atoi(os.Getenv("HERMES_SMTP_PORT"))
 		password := os.Getenv("HERMES_SMTP_PASSWORD")
 		SMTPUser := os.Getenv("HERMES_SMTP_USER")
-		if password == "" {
-			fmt.Printf("Enter SMTP password of '%s' account: ", SMTPUser)
-			bytePassword, _ := terminal.ReadPassword(0)
-			password = string(bytePassword)
-		}
+		// if password == "" {
+		// 	fmt.Printf("Enter SMTP password of '%s' account: ", SMTPUser)
+		// 	bytePassword, _ := terminal.ReadPassword(0)
+		// 	password = string(bytePassword)
+		// }
 		smtpConfig := smtpAuthentication{
 			Server:         os.Getenv("HERMES_SMTP_SERVER"),
 			Port:           port,
