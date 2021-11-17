@@ -63,15 +63,18 @@
     <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
     <script>
         const socket = io("http://localhost:3000/socket.io/");
-        // var s2 = io("/");
+
+        // get the name of the client
+        const name = prompt("Please enter your name");
+
+        socket.emit("message", name + " join the chat room.")
 
         socket.on('message', function (msg) {
             $('#messages').append($('<li>').text(msg));
         });
 
         $('form').submit(function () {
-            socket.emit('message', $('#m').val());
-            console.log("Send :- " + $('#m').val())
+            socket.emit('message', name + " : " + $('#m').val());
 
             $('#m').val('');
             return false;

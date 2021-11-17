@@ -14,17 +14,19 @@ func Socket() *socketio.Server {
 	}
 
 	server.On("connection", func(so socketio.Socket) {
-		log.Println("on connection")
+		log.Println("New connection")
 
-		// so.Join("message")
+		so.Join("chat")
 
 		so.On("message", func(msg string) {
-			so.Emit("message", "Return :- "+msg)
-			log.Println("emit:", msg)
+			// return that message
+			so.Emit("message", msg)
+
+			so.BroadcastTo("chat", "message", msg)
 		})
 
 		so.On("disconnection", func() {
-			log.Println("on disconnect")
+			log.Println("Connection closed")
 		})
 	})
 
