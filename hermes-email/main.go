@@ -2,11 +2,11 @@ package hermes
 
 import (
 	"email/models"
+	"email/utils"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/mail"
 	"os"
 	"strconv"
@@ -97,7 +97,7 @@ func SendEmail(delivery rmq.Delivery) {
 				}
 			}
 		}
-		log.Println("Email sent successfully.")
+		utils.Logger("Email sent successfully to " + T.To)
 	}
 }
 

@@ -41,7 +41,7 @@ func SignInController(w http.ResponseWriter, r *http.Request) {
 		w.Write(jsonResponse)
 		return
 	}
-	log.Info("Signed In as ", user.Email)
+	utils.Logger("Signed In as " + user.Email)
 	w.Write(jsonResponse)
 }
 
@@ -68,7 +68,7 @@ func SignUpController(w http.ResponseWriter, r *http.Request) {
 		w.Write(jsonResponse)
 		return
 	}
-	log.Info("Signed Up as ", user.Email)
+	utils.Logger("Signed Up as " + user.Email)
 	w.Write(jsonResponse)
 }
 
@@ -122,6 +122,6 @@ func RefreshTokenController(w http.ResponseWriter, r *http.Request) {
 	}
 
 	jsonResponse, _ := json.Marshal(Response{Message: "Successfully refresh token.", Data: tokens, Success: true})
-	log.Info("Token refreshed")
+	utils.Logger("Token refreshed")
 	w.Write(jsonResponse)
 }
