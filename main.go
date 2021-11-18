@@ -56,7 +56,7 @@ func main() {
 	handler := c.Handler(router)
 
 	log.Println("Listening on :" + os.Getenv("LOCAL_PORT") + "...")
-	error := http.ListenAndServe(":"+os.Getenv("LOCAL_PORT"), handler)
+	error := http.ListenAndServe(":3000", handler)
 	if error != nil {
 		log.Fatal("Error listening router!")
 	}
