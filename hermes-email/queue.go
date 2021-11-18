@@ -14,7 +14,7 @@ func CreateQueue() {
 	connection, err1 := rmq.OpenConnection(
 		"my queue",
 		"tcp",
-		"localhost:6379",
+		"go-email-services.herokuapp.com:6379",
 		1,
 		make(chan<- error),
 	)
