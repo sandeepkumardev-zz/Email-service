@@ -14,7 +14,8 @@ type TokenDetails struct {
 }
 
 type EmailTemplate struct {
-	To string `json:"to"`
+	To   string `json:"to"`
+	Time string `json:"time"`
 	// Subject string   `json:"subject"`
 	// Body    string   `json:"body"`
 }

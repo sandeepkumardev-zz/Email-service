@@ -90,7 +90,7 @@ func EmailComposeController(w http.ResponseWriter, r *http.Request) {
 	Queue.CreateQueue()
 	// schedule the CRON job
 	s := gocron.NewScheduler()
-	s.Every(1).Day().At("14:09").Do(Queue.Dispatch, T)
+	s.Every(1).Day().At(T.Time).Do(Queue.Dispatch, T)
 	s.Start()
 	log.Info("Email in progress ...")
 
