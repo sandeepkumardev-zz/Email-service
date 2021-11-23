@@ -22,3 +22,4 @@ default
 flat
 
 logfile.txt
+dist/
